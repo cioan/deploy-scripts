@@ -1,7 +1,7 @@
 #!/bin/sh
 #set -x
 # set admin email so that you can get email
-ADMIN='<%= @send_email_alert_to %>'
+ADMIN='<%= @email_alerts_to %>'
 # set alert level
 ALERT=<%= @hard_drive_percent_alert %>
 df -HP | grep -vE '^Filesystem|tmpfs|cdrom' | awk '{ print $5 " " $1 }' | while read output;
