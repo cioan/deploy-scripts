@@ -1,0 +1,16 @@
+#!/bin/sh
+#set -x
+# set admin email so that you can get email
+ADMIN='<%= @send_email_alert_to %>'
+# set alert level
+ALERT=<%= @hard_drive_percent_alert %>
+df -HP | grep -vE '^Filesystem|tmpfs|cdrom' | awk '{ print $5 " " $1 }' | while read output;
+do
+#  echo $output
+  usep=$(echo $output | awk '{ print $1}' | cut -d'%' -f1  )
+  partition=$(echo $output | awk '{ print $2 }' )
+  if [ $usep -ge $ALERT ]; then
+    echo "Running out of space \"$partition $usep% used\" on $(hostname) as on $(date)" |
+    mail -s "WARNING: $(hostname) almost out of disk space $usep% used" $ADMIN
+  fi
+done
