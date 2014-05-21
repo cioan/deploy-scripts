@@ -8,6 +8,7 @@ node default {
   include wget
   include java
   include mailx
+  include sys_jobs
 }
 
 node 'zanmi.pih-emr.org' inherits default {
